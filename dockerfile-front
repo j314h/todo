@@ -1,0 +1,8 @@
+FROM node:18.0.0
+WORKDIR /front
+COPY front/package.json .
+COPY front/package-lock.json .
+RUN npm ci
+COPY front .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]

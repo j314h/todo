@@ -17,3 +17,6 @@
 /api.phpunit.result.cache
 /api/phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+# db
+/todo-db
