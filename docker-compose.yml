@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # front
+  # todo-front:
+    # container_name: todo-front
+
+  # db
+  todo-db:
+    container_name: todo-db
+    image: mysql:8.0
+    # command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+    ports:
+      - "4306:4306"
+    volumes:
+      - todo-db:/var/lib/mysql
+    networks:
+      - todo-dev
+
+  # api
+  todo-api:
+    container_name: todo-api
+    build: ./dockerfiles/dockerfile-api
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./api:/var/www/api
+    depends_on:
+      - todo-db
+    networks:
+      - todo-dev
+
+  # nginx
+  todo-nginx:
+    container_name: nginx
+    image: nginx:stable-alpine
+    ports:
+      - '8080:80'
+    volumes:
+      - ./api:/var/www/api
+      - ./dockerfiles/dockerfile-nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - todo-api
+      - todo-db
+    networks:
+      - todo-dev
+
+  # php my admin
+  todo-phpmyadmin:
+    container_name: todo-phpmyadmin
+    image: phpmyadmin
+    restart: always
+    depends_on:
+      - todo-db
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: todo-db
+    networks:
+      - todo-dev
+
+  # mail
+  todo-maildev:
+    container_name: todo-maildev
+    image: maildev/maildev
+    command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+    ports:
+      - "8081:80"
+    restart: always
+    networks:
+      - todo-dev
+
+networks:
+  todo-dev:
+
+volumes:
+  todo-db:
