@@ -10,6 +10,11 @@ services:
     volumes:
       - "./front/public:/front/public"
       - "./front/src:/front/src"
+      - "./front/tsconfig.json:/front/tsconfig.json"
+      - "./front/tsconfig.node.json:/front/tsconfig.node.json"
+      - "./front/package-lock.json:/front/package-lock.json"
+      - "./front/package.json:/front/package.json"
+      - "./front/vite.config.ts:/front/vite.config.ts"
     ports:
       - "3000:3000"
     networks:
