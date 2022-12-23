@@ -2,14 +2,4 @@ FROM node:18.0.0
 
 # creation dossier front et copy des fichiers package
 WORKDIR /front
-COPY front/package.json .
-COPY front/package-lock.json .
-
-# installe package avec version fixe
-RUN npm ci
-
-# on copy le dossier front
-COPY front .
-
-# on execute l'app
-CMD ["npm", "run", "dev"]
+COPY /front .

@@ -8,13 +8,15 @@ services:
       context: .
       dockerfile: dockerfile-front
     volumes:
-      - "./front/public:/front/public"
-      - "./front/src:/front/src"
-      - "./front/tsconfig.json:/front/tsconfig.json"
-      - "./front/tsconfig.node.json:/front/tsconfig.node.json"
-      - "./front/package-lock.json:/front/package-lock.json"
-      - "./front/package.json:/front/package.json"
-      - "./front/vite.config.ts:/front/vite.config.ts"
+      - "./front/public:/front/public:ro"
+      - "./front/src:/front/src:ro"
+      - "./front/tsconfig.json:/front/tsconfig.json:ro"
+      - "./front/tsconfig.node.json:/front/tsconfig.node.json:ro"
+      - "./front/package-lock.json:/front/package-lock.json:ro"
+      - "./front/package.json:/front/package.json:ro"
+      - "./front/vite.config.ts:/front/vite.config.ts:ro"
+      - "./front/node_modules:/front/node_modules"
+    command: sh -c "npm ci && npm run dev"
     ports:
       - "3000:3000"
     networks:
@@ -45,7 +47,16 @@ services:
       context: .
       dockerfile: dockerfile-api
     volumes:
-      - "./api:/var/www/api"
+      - "./api/bin:/var/www/api/bin"
+      - "./api/config:/var/www/api/config"
+      - "./api/migrations:/var/www/api/migrations"
+      - "./api/public:/var/www/api/public"
+      - "./api/src:/var/www/api/src"
+      - "./api/templates:/var/www/api/templates"
+      - "./api/tests:/var/www/api/tests"
+      - "./api/translations:/var/www/api/translations"
+      - "./api/var:/var/www/api/var"
+      - "./api/vendor:/var/www/api/vendor"
     ports:
       - "9000:9000"
     depends_on:

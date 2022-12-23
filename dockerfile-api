@@ -10,7 +10,9 @@ RUN apt update \
     && docker-php-ext-install zip
 
 # creation du dossier api dans le container
+# on fait la copie du dossier api
 WORKDIR /var/www/api
+COPY /api .
 
 # installe composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
