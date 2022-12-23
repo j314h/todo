@@ -17,10 +17,10 @@
 git clone <html/ssh project>
 ```
 
-- executer la commande suivant à la racine du projet
+- executer le fichier `docker-install.sh` qui ce situe à la racine du projet
 
 ```shell
-docker-compose up -d
+./docker-install.sh
 ```
 
 > Le projet est installé et prêt à être utilisé
