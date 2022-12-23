@@ -15,7 +15,6 @@
 
 ###> symfony/phpunit-bridge ###
 /api.phpunit.result.cache
-/api/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 # db
