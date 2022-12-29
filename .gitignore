@@ -19,3 +19,9 @@
 
 # db
 /todo-db
+
+# files for vim
+*.swp
+
+# files for phpstorm
+.idea
